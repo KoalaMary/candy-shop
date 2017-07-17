@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {addToBasket} from '../Basket/actions';
 import './catalog.css';
 
 class Catalog extends Component {
-    constructor(props) {
-        super(props);
-    }
+
+    addProductToBasket = (product) => {
+        this.props.dispatch(addToBasket(product));
+    };
 
     render() {
         const {products} = this.props;
@@ -16,13 +18,13 @@ class Catalog extends Component {
                 </div>
                 <div className="products-area">
                     {products.map((product) =>
-                        <section className="product">
+                        <section className="product" key={product.id}>
                             <h4 className="product__name">{product.name}</h4>
                             <img className="product__image"
                                  src={product.image}
                                  alt={product.name}/>
                             <span className="product__price">{product.price} &#8381;</span>
-                            <button className="product__btn">Купить</button>
+                            <button className="product__btn" onClick={() => this.addProductToBasket(product)}>В корзину</button>
                         </section>
                     )}
                 </div>
